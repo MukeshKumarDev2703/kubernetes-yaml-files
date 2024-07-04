@@ -1,21 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
+apiVersion: apps/v1 ##This specifies the API version of the Kubernetes resource. apps/v1 is used for deployment resources in modern Kubernetes versions.
+kind: Deployment # This indicates that the resource being created is a Deployment, which manages a set of identical pods, ensuring that the specified number of replicas are running.
+metadata: ##This section provides metadata about the resource.
   name: nginx-deployment2
-spec:
+spec: ##  This section defines the desired state of the Deployment.
   replicas: 2
-  selector:
-    matchLabels:
+  selector:  ## Defines how the Deployment finds which pods to manage
+    matchLabels: ## Specifies that pods with the label app: nginx should be managed by this Deployment. This ensures that the Deployment knows which pods are its own.
       app: server
-  template:
-    metadata:
+  template: ##  This is the template for the pods that will be created by the Deployment
+    metadata: ## Provides metadata for the pods
       labels:
         app: server
-    spec:
+    spec: ## Defines the pod specification
       containers:
       - name: nginx
         image: nginx:latest
-        resources:
+        resources: ## Specifies the resource limits for the container
           limits:
             memory: "128Mi"
             cpu: "500m"
@@ -33,7 +33,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 30008
+    nodePort: 30008 ## NodePort must be range in 30000-32767
   #type: LoadBalancer
   type: NodePort
 ## In this yaml file I use service name NodePort.
